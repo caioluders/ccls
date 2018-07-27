@@ -495,7 +495,11 @@ public:
     if (init) {
       SourceManager &SM = Ctx->getSourceManager();
       const LangOptions& Lang = Ctx->getLangOpts();
-      SourceRange R = init->getSourceRange();
+      SourceRange R = SM.getExpansionRange(init->getSourceRange())
+#if LLVM_VERSION_MAJOR >= 7
+                          .getAsRange()
+#endif
+          ;
       SourceLocation L = D->getLocation();
       if (L.isMacroID() || !SM.isBeforeInTranslationUnit(L, R.getBegin()))
         return;
@@ -882,8 +886,10 @@ public:
           if (specialization) {
             const TypeSourceInfo *TSI = TD->getTypeSourceInfo();
             SourceLocation L1 = TSI->getTypeLoc().getBeginLoc();
-            Range loc1 = FromTokenRange(SM, Lang, {L1, L1});
-            type1.uses.push_back(GetUse(db, loc1, LexDC, Role::Reference));
+            if (SM.getFileID(L1) == LocFID) {
+              Range loc1 = FromTokenRange(SM, Lang, {L1, L1});
+              type1.uses.push_back(GetUse(db, loc1, LexDC, Role::Reference));
+            }
           }
         }
       }
