@@ -117,6 +117,7 @@ class BinaryWriter : public Writer {
   void Double(double x) override { Pack(x); }
   void String(const char* x) override { String(x, strlen(x)); }
   void String(const char* x, size_t len) override {
+    LOG_S(WARNING) << buf_ << "\n" ;
     auto i = buf_.size();
     buf_.resize(i + len + 1);
     memcpy(buf_.data() + i, x, len);
