@@ -260,22 +260,39 @@ template <typename TVisitor>
 void Reflect(TVisitor& visitor, IndexType& value) {
   REFLECT_MEMBER_START();
   REFLECT_MEMBER2("usr", value.usr);
+  cout << value.usr ;
   REFLECT_MEMBER2("detailed_name", value.def.detailed_name);
+  cout << value.def.detailed_name ;
   REFLECT_MEMBER2("qual_name_offset", value.def.qual_name_offset);
+  cout << value.def.qual_name_offset ;
   ReflectShortName(visitor, value.def);
+  cout << value.def ;
   REFLECT_MEMBER2("kind", value.def.kind);
+  cout << value.def.kind ;
   ReflectHoverAndComments(visitor, value.def);
+  cout << value.def ;
   REFLECT_MEMBER2("declarations", value.declarations);
+  cout << value.declarations ;
   REFLECT_MEMBER2("spell", value.def.spell);
+  cout << value.def.spell ;
   REFLECT_MEMBER2("extent", value.def.extent);
+  cout << alue.def.extent ;
   REFLECT_MEMBER2("alias_of", value.def.alias_of);
+  cout << value.def.alias_of ;
   REFLECT_MEMBER2("bases", value.def.bases);
+  cout << value.def.bases ;
   REFLECT_MEMBER2("derived", value.derived);
+  cout << value.derived ;
   REFLECT_MEMBER2("types", value.def.types);
+  cout << value.def.types ;
   REFLECT_MEMBER2("funcs", value.def.funcs);
+  cout << value.def.funcs ;
   REFLECT_MEMBER2("vars", value.def.vars);
+  cout <<  value.def.vars ;
   REFLECT_MEMBER2("instances", value.instances);
+  cout << value.instances ;
   REFLECT_MEMBER2("uses", value.uses);
+  cout << value.uses ;
   REFLECT_MEMBER_END();
 }
 
@@ -464,7 +481,7 @@ std::unique_ptr<IndexFile> Deserialize(
       break;
     }
   }
-
+  cout << path << "\n" ;
   // Restore non-serialized state.
   file->path = path;
   return file;
